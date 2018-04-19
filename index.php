@@ -1,16 +1,6 @@
 <?php
 
-  $dbHost = 'localhost';
-  $dbName = 'cms';
-  $dbUser = 'cmsadmin';
-  $dbPass = 'sesame';
-
-  $connection = mysqli_connect($dbHost, $dbUser, $dbPass, $dbName);
-
-  if(mysqli_connect_error()) {
-    echo mysqli_connect_error();
-    exit;
-  }
+  require 'includes/database.php';
 
   $sql = "SELECT * FROM article ORDER BY publishedAt";
 
@@ -23,18 +13,7 @@
   }
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>CMS</title>
-  </head>
-  <body>
-    <header>
-      <h1>CMS</h1>
-    </header>
+  <?php require 'includes/header.php'; ?>
     <main>
       <?php if(empty($articles)):?>
         <p>No articles found!</p>
@@ -43,13 +22,11 @@
           <?php foreach($articles as $article) : ?>
             <li>
               <article>
-                <h2><?= $article['title'];?></h2>
+                <h2><a href="article.php?id=<?= $article['id']; ?>"><?= $article['title'];?></a></h2>
                 <p><?= $article['content'];?></p>
               </article>
             </li>
           <?php endforeach; ?>
         </ul>
       <?php endif;?>
-    </main>
-  </body>
-</html>
+    <?php require 'includes/footer.php'; ?>
